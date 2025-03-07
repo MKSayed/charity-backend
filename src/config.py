@@ -1,8 +1,9 @@
 from pydantic_settings import BaseSettings
-class Settings(BaseSettings):
 
+
+class Settings(BaseSettings):
     sqlite_file_name: str
     pos_comport: int
 
 
-settings = Settings(_env_file='.env')
+settings = Settings(_env_file=".env")
