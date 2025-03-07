@@ -1,5 +1,4 @@
-from datetime import datetime
-from sqlmodel import Field, SQLModel, Column, DateTime
+from sqlmodel import Field, SQLModel
 from src.models.minxin import CreatedUpdatedAtMixin
 
 

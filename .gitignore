@@ -2,5 +2,6 @@
 meezaapi_v1_9.dll
 sqlite3.db
 .env
+.idea
 
 src/utils/geidea_api.py
