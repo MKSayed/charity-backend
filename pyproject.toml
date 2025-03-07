@@ -1,0 +1,13 @@
+[project]
+name = "bait-zakat-fastapi-backend"
+version = "0.1.0"
+description = "A FastAPI backend for Bait Zakat that integrates with Gediea's POS terminal."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.14.1",
+    "fastapi[standard]>=0.115.11",
+    "pydantic-settings>=2.8.1",
+    "sqlalchemy>=2.0.38",
+    "sqlmodel>=0.0.24",
+]

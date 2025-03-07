@@ -1,0 +1,6 @@
+.venv
+meezaapi_v1_9.dll
+sqlite3.db
+.env
+
+src/utils/geidea_api.py
