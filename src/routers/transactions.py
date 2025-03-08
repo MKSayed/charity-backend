@@ -14,12 +14,11 @@ def create_transaction(trx: TransactionCreate, session: SessionDep):
         session, trx.phone_no, trx.transaction_amount, trx.service_id
     )
 
-    processing_trx_log = create_processing_transaction_log(
-        session, processing_trx.uuid
-    )
+    processing_trx_log = create_processing_transaction_log(session, processing_trx.uuid)
 
-    response = process_purchase_transaction(trx.transaction_amount)
-    
+    success, response = process_purchase_transaction(trx.transaction_amount,
+                                                     '0000000000000001')
+
     session.rollback()
-    
+    print(success)
     print(response)

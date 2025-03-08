@@ -30,7 +30,7 @@ class Transaction(TransactionBase, TimeStampMixin, table=True):
     status: TransactionStatus
     card_number: str | None = None
     terminal_id: str | None = Field(default=None, index=True)
-    merchant_id: str | None  = Field(default=None, index=True)
+    merchant_id: str | None = Field(default=None, index=True)
     ecr_ref_no: str | None = None
     trx_datetime: datetime | None = None
 

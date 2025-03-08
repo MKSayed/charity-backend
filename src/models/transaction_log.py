@@ -14,11 +14,11 @@ class EventType(StrEnum):
 class TransactionLogBase(SQLModel):
     event_details: str | None
     event_type: EventType
-    transaction_uuid: UUID = Field(foreign_key='transaction.uuid')
+    transaction_uuid: UUID = Field(foreign_key="transaction.uuid")
 
 
 class TransactionLog(TransactionLogBase, table=True):
-    __tablename__ : Any = "transaction_log"
-    
+    __tablename__: Any = "transaction_log"
+
     uuid: UUID = Field(default_factory=uuid4, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.now)

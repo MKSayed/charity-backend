@@ -10,7 +10,7 @@ class ServiceBase(SQLModel):
 class Service(ServiceBase, TimeStampMixin, table=True):
     id: int | None = Field(None, primary_key=True)
     active: bool = Field(default=True)
-    
+
 
 class ServicePublic(ServiceBase):
     id: int
