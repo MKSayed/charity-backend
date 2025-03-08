@@ -5,7 +5,7 @@ from src.config import settings
 geidea_trx_processor = GeideaAPI(settings.pos_comport)
 
 
-def purchase_wrapper(
+def _purchase_wrapper(
     trx_amount: int, trx_ecr_ref: str
 ):  # Wrapper function needed for passing as a pickle to another process
     return geidea_trx_processor.purchase(trx_amount, trx_ecr_ref)
@@ -24,10 +24,11 @@ def process_purchase_transaction(
     # Run geidea_trx_processor.purchase in a separate interruptable process
     # to be able to time it out
     with multiprocessing.Pool(1) as pool:
-        result = pool.apply_async(purchase_wrapper, (trx_amount_cents, trx_ecr_ref))
+        result = pool.apply_async(_purchase_wrapper, (trx_amount_cents, trx_ecr_ref))
         try:
             purchase_resp = result.get(timeout=settings.transaction_timeout_in_secs)
             purchase_success = purchase_resp.response_code == 0
             return purchase_success, purchase_resp
+            
         except multiprocessing.TimeoutError:
             return False, CheckStatusResult(-16, "Purchase transaction timed out")

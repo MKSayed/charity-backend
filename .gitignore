@@ -5,6 +5,6 @@ sqlite3.db
 .idea
 .ruff_cache
 .vscode
-
+ECR*
 src/utils/geidea_api.py
 **/__pycache__

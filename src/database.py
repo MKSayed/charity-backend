@@ -9,7 +9,7 @@ sqlite_file_name = settings.sqlite_file_name
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
 connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args, echo=True)
+engine = create_engine(sqlite_url, connect_args=connect_args, echo=False)
 
 
 def create_db_and_tables():
