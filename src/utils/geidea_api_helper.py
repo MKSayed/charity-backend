@@ -29,6 +29,6 @@ def process_purchase_transaction(
             purchase_resp = result.get(timeout=settings.transaction_timeout_in_secs)
             purchase_success = purchase_resp.response_code == 0
             return purchase_success, purchase_resp
-            
+
         except multiprocessing.TimeoutError:
             return False, CheckStatusResult(-16, "Purchase transaction timed out")

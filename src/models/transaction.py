@@ -18,7 +18,7 @@ class POSInteractionMethod(StrEnum):
 
 
 class TransactionBase(SQLModel):
-    model_config = ConfigDict(from_attributes=True) # pyright: ignore
+    model_config = ConfigDict(from_attributes=True)  # pyright: ignore
 
     transaction_amount: float
     phone_no: str = Field(
@@ -44,6 +44,7 @@ class TransactionPublic(TransactionBase):
     status: TransactionStatus
     ecr_ref_no: str | None = None
     trx_datetime: datetime | None = None
+
 
 class TransactionCreate(TransactionBase):
     service_id: int

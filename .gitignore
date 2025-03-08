@@ -8,3 +8,4 @@ sqlite3.db
 ECR*
 src/utils/geidea_api.py
 **/__pycache__
+!src/utils/ecr_ref_generator.py

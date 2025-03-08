@@ -5,13 +5,18 @@ from src.utils.geidea_api import TransactionResult
 
 
 def create_processing_transaction(
-    session: Session, phone_number: str, trx_amount: float, service_id: int
+    session: Session,
+    phone_number: str,
+    trx_amount: float,
+    service_id: int,
+    ecr_ref_no: str,
 ) -> Transaction:
     new_transaction = Transaction(
         phone_no=phone_number,
         transaction_amount=trx_amount,
         service_id=service_id,
         status=TransactionStatus.processing,
+        ecr_ref_no=ecr_ref_no,
     )
 
     session.add(new_transaction)
@@ -31,7 +36,7 @@ def update_processing_transaction(
         processing_trx.card_number = trx_output.card_number
         processing_trx.terminal_id = trx_output.terminal_id
         processing_trx.merchant_id = trx_output.merchant_id
-        processing_trx.ecr_ref_no = trx_output.ecr_ref_no
+        print("ECR HERE:", trx_output.ecr_ref_no)
         processing_trx.trx_datetime = (
             trx_output.trx_datetime if trx_output.trx_datetime else None
         )
