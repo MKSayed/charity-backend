@@ -14,7 +14,7 @@ engine = create_engine(sqlite_url, connect_args=connect_args, echo=True)
 
 def create_db_and_tables():
     """
-    Created database file and tables only if they don't exist
+    Create database file and tables only if they don't exist
     """
     SQLModel.metadata.create_all(engine)
 

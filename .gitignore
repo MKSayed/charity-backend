@@ -3,5 +3,8 @@ meezaapi_v1_9.dll
 sqlite3.db
 .env
 .idea
+.ruff_cache
+.vscode
 
 src/utils/geidea_api.py
+**/__pycache__

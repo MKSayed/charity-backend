@@ -1,6 +1,6 @@
 from src.models.service import Service
 from src.database import get_session
-from src.services.services import get_first_service
+from src.services.service import get_first_service
 
 services = [
     (1, "ستر وغطاء"),

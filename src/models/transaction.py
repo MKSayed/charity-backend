@@ -17,19 +17,23 @@ class POSInteractionMethod(StrEnum):
 
 
 class TransactionBase(SQLModel):
-    service_id: int = Field(foreign_key="service.id")
     transaction_amount: float
     phone_no: str = Field(
         max_length=11, min_length=11, index=True
     )  # Egyptian phone numbers are always 11 digits
-    status: TransactionStatus
-    pos_interaction_method: POSInteractionMethod
-    card_number: str
-    terminal_id: str = Field(index=True)
-    merchant_id: str = Field(index=True)
-    ecr_ref_no: str
-    trx_datetime: datetime
 
 
 class Transaction(TransactionBase, CreatedUpdatedAtMixin, table=True):
     uuid: UUID = Field(default_factory=uuid4, primary_key=True)
+    service_id: int = Field(foreign_key="service.id")
+    pos_interaction_method: POSInteractionMethod | None = None
+    status: TransactionStatus
+    card_number: str | None = None
+    terminal_id: str | None = Field(default=None, index=True)
+    merchant_id: str | None  = Field(default=None, index=True)
+    ecr_ref_no: str | None = None
+    trx_datetime: datetime | None = None
+
+
+class TransactionCreate(TransactionBase):
+    service_id: int

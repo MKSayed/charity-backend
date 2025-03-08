@@ -4,6 +4,6 @@ from datetime import datetime
 
 class CreatedUpdatedAtMixin(SQLModel):
     created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime | None = Field(
+    updated_at: datetime | None = Field(default=None,
         sa_column=Column(DateTime, onupdate=datetime.now)
     )
