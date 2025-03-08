@@ -6,4 +6,4 @@ class Settings(BaseSettings):
     pos_comport: int
 
 
-settings = Settings(_env_file=".env")
+settings = Settings(_env_file=".env")  # pyright: ignore attributes are not optional but they'll be loaded from .env file

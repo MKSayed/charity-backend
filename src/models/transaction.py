@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import StrEnum
 from sqlmodel import SQLModel, Field
 from uuid import UUID, uuid4
-from src.models.minxin import CreatedUpdatedAtMixin
+from src.models.mixin import TimeStampMixin
 
 
 class TransactionStatus(StrEnum):
@@ -23,7 +23,7 @@ class TransactionBase(SQLModel):
     )  # Egyptian phone numbers are always 11 digits
 
 
-class Transaction(TransactionBase, CreatedUpdatedAtMixin, table=True):
+class Transaction(TransactionBase, TimeStampMixin, table=True):
     uuid: UUID = Field(default_factory=uuid4, primary_key=True)
     service_id: int = Field(foreign_key="service.id")
     pos_interaction_method: POSInteractionMethod | None = None
