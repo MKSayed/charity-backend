@@ -36,7 +36,6 @@ def update_processing_transaction(
         processing_trx.card_number = trx_output.card_number
         processing_trx.terminal_id = trx_output.terminal_id
         processing_trx.merchant_id = trx_output.merchant_id
-        print("ECR HERE:", trx_output.ecr_ref_no)
         processing_trx.trx_datetime = (
             trx_output.trx_datetime if trx_output.trx_datetime else None
         )

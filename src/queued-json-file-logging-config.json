@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "simple": {
+      "format": "[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s",
+      "datefmt": "%Y-%m-%dT%H:%M:%S"
+    },
+    "json": {
+      "()": "src.utils.my_logger.MyJSONFormatter",
+      "fmt_keys": {
+        "timestamp": "timestamp",
+        "level": "levelname",
+        "message": "message",
+        "logger": "name",
+        "module": "module",
+        "function": "funcName",
+        "line": "lineno",
+        "thread_name": "threadName"
+      }
+    }
+  },
+  "handlers": {
+    "file_json": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "INFO",
+      "formatter": "json",
+      "filename": "logs/bait-zakat.jsonl",
+      "maxBytes": 20971520,
+      "backupCount": 3
+    },
+    "queue_handler": {
+      "class": "logging.handlers.QueueHandler",
+      "handlers": [
+        "file_json"
+      ],
+      "respect_handler_level": true
+    }
+  },
+  "loggers": {
+    "root": { 
+      "level": "DEBUG",
+      "handlers": [
+        "queue_handler"
+      ]
+    }
+  }
+}

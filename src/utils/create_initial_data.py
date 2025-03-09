@@ -1,6 +1,7 @@
 from src.models.service import Service
 from src.database import get_session
 from src.services.service import get_first_service
+from src.utils.my_logger import logger
 
 services = [
     (1, "ستر وغطاء"),
@@ -16,6 +17,7 @@ services = [
 
 
 def create_initial_data():
+    logger.warning("Attempting to save initial services to the database...")
     for session in get_session():
         first_service = get_first_service(session)
         if not first_service:
@@ -23,6 +25,6 @@ def create_initial_data():
                 new_service = Service(id=service_id, name=service)
                 session.add(new_service)
             session.commit()
-            print("All services was created successfully")
+            logger.warning("All services was created successfully")
         else:
-            print("Services were previously initialized")
+            logger.warning("Services were previously initialized")
