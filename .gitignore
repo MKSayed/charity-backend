@@ -1,11 +1,13 @@
 .venv
 meezaapi_v1_9.dll
 sqlite3.db
-.env
+.config
 .idea
 .ruff_cache
 .vscode
+logs
 ECR*
 src/utils/geidea_api.py
 **/__pycache__
 !src/utils/ecr_ref_generator.py
+output

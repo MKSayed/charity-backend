@@ -8,4 +8,4 @@ class Settings(BaseSettings):
     kiosk_id: int
 
 
-settings = Settings(_env_file=".env")  # pyright: ignore attributes are not optional but they'll be loaded from .env file
+settings = Settings(_env_file=".config")  # pyright: ignore attributes are not optional but they'll be loaded from .env file

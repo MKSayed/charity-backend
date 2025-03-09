@@ -2,8 +2,9 @@ import datetime as dt
 import json
 import logging.config
 import logging.handlers
+import sys
 from typing import Any, override
-import pathlib
+from pathlib import Path
 import atexit
 
 LOG_RECORD_BUILTIN_ATTRS = {
@@ -53,7 +54,9 @@ class MyJSONFormatter(logging.Formatter):
     def _prepare_log_dict(self, record: logging.LogRecord):
         always_fields = {
             "message": record.getMessage(),
-            "timestamp": dt.datetime.fromtimestamp(record.created).strftime("%Y-%m-%dT%H:%M:%S")
+            "timestamp": dt.datetime.fromtimestamp(record.created).strftime(
+                "%Y-%m-%dT%H:%M:%S"
+            ),
         }
         if record.exc_info is not None:
             always_fields["exc_info"] = self.formatException(record.exc_info)
@@ -91,7 +94,14 @@ logger = logging.getLogger("bait-zakat-backend")
 
 
 def setup_logging():
-    config_file = pathlib.Path("src/queued-json-file-logging-config.json")
+    # Check if running as PyInstaller bundle
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        # Running in PyInstaller bundle
+        base_path = Path(sys._MEIPASS)
+        config_file = base_path.joinpath("queued-json-file-logging-config.json")
+    else:
+        # Running in normal Python environment
+        config_file = Path("src").joinpath("queued-json-file-logging-config.json")
     with open(config_file) as f_in:
         config = json.load(f_in)
 
@@ -102,7 +112,7 @@ def setup_logging():
             "logging.handlers.RotatingFileHandler",
         ):
             if "filename" in handler_config:
-                log_path = pathlib.Path(handler_config["filename"])
+                log_path = Path(handler_config["filename"])
                 log_path.parent.mkdir(parents=True, exist_ok=True)
 
     logging.config.dictConfig(config)
@@ -114,20 +124,23 @@ def setup_logging():
 
 
 def control_uvicorn_loggers():
-    # Silence uvicorn INFO logs but keep warnings and errors
+    """
+    Silence uvicorn INFO logs but keep warnings and errors
+    Note: Must be called after uvicorn.run or it will have no effect 
+    """ 
     uvicorn_loggers = [
         logging.getLogger("uvicorn"),
         logging.getLogger("uvicorn.error"),
         logging.getLogger("uvicorn.access"),
     ]
-    
+
     for uvicorn_logger in uvicorn_loggers:
         # Remove any existing handlers to prevent stdout output
-        for handler in uvicorn_logger.handlers[:]:
+        for handler in uvicorn_logger.handlers:
             uvicorn_logger.removeHandler(handler)
-        
+
         # Set level to WARNING so we only capture warnings and above
         uvicorn_logger.setLevel(logging.WARNING)
-        
+
         # Only use our configured handlers
         uvicorn_logger.propagate = True
