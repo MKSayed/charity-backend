@@ -22,9 +22,11 @@ class TransactionBase(SQLModel):
 
     transaction_amount: float
     phone_no: str = Field(
-        max_length=11, min_length=11, index=True
+        max_length=11, min_length=11, index=True, 
+        schema_extra={'pattern': r"^\d*$"}
     )  # Egyptian phone numbers are always 11 digits
 
+    
 
 class Transaction(TransactionBase, TimeStampMixin, table=True):
     uuid: UUID = Field(default_factory=uuid4, primary_key=True)

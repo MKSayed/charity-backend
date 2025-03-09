@@ -14,10 +14,10 @@ from src.utils.my_logger import control_uvicorn_loggers, setup_logging
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # on startup
-    create_db_and_tables()
-    create_initial_data()
     setup_logging()
     control_uvicorn_loggers()
+    create_db_and_tables()
+    create_initial_data()
     yield
     # on shutdown
     pass
@@ -64,6 +64,6 @@ if __name__ == "__main__":
                 if custom_logging["handlers"][handler_name]["formatter"] not in custom_logging["formatters"]:
                     custom_logging["handlers"][handler_name]["formatter"] = "default"
 
-            
-
-    uvicorn.run(app=app, host="0.0.0.0", port=8000, log_config=custom_logging) # type: ignore
+        uvicorn.run(app=app, host="0.0.0.0", port=8000, log_config=custom_logging)
+    else: 
+        uvicorn.run(app=app, host="0.0.0.0", port=8000)
